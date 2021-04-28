@@ -58,7 +58,8 @@ public class PersonDAO {
     public void showAllPersons() {
         
         EntityManager em = emf.createEntityManager();
-        
+
+        em.clear();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
         List<Person> resultList = query.getResultList();
         resultList.forEach(System.out::println);

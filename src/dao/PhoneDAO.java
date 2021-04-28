@@ -34,7 +34,7 @@ public class PhoneDAO {
     public void showAllPhones() {
         
         EntityManager em = emf.createEntityManager();
-        
+
         TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
         List<Phone> resultList = query.getResultList();
         resultList.forEach(p -> System.out.println(p));
@@ -96,11 +96,12 @@ public class PhoneDAO {
         query.setParameter("number", number);
         Phone phone = query.getSingleResult();
         
-        //person.addPhone(phone);
+
         
         em.getTransaction().begin();
-        em.persist(person);
         person.addPhone(em.merge(phone));
+       // person.addPhone(em.merge(phone));
+        em.persist(em.merge(person));
         em.getTransaction().commit();
         em.close();
     }

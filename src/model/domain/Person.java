@@ -24,7 +24,7 @@ public class Person {
     private String name;
     
     //@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER )
-    @OneToMany(cascade = { CascadeType.ALL}, fetch=FetchType.EAGER) // Det här kanske löste ett problem.
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH}, fetch=FetchType.EAGER) // Det här kanske löste ett problem.
     @JoinColumn(name = "person_id")
     private List<Phone> phones;
 

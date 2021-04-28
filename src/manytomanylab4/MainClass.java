@@ -54,7 +54,7 @@ public class MainClass {
                 addPhone();
                 break;
             case 3:
-                addExistingPhoneToNewPerson2(); // Har ändrat här...
+                addExistingPhoneToNewPerson2(); // Konstigt här...
                 break;
             case 4:
                 addExistingPhoneToExistingPerson();
