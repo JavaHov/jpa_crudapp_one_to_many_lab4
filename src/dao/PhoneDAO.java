@@ -36,6 +36,7 @@ public class PhoneDAO {
         EntityManager em = emf.createEntityManager();
 
         TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
+        //emf.getCache().evict(Phone.class); // Funkar som raden nedan.
         query.setHint("javax.persistence.cache.storeMode", "REFRESH");
         List<Phone> resultList = query.getResultList();
         resultList.forEach(p -> System.out.println(p));
@@ -100,14 +101,23 @@ public class PhoneDAO {
         query.setParameter("number", number);
         Phone phone = query.getSingleResult();
         
-
+        
+        // Det här funkar också nu...
+        person.addPhone(phone);
         
         em.getTransaction().begin();
-        person.addPhone(em.merge(phone));
-       // person.addPhone(em.merge(phone));
-        em.persist(em.merge(person));
+        em.persist(person);
         em.getTransaction().commit();
         em.close();
+        
+        
+        
+        // Funkar...
+//        em.getTransaction().begin();
+//        person.addPhone(em.merge(phone));
+//        em.persist(em.merge(person));
+//        em.getTransaction().commit();
+//        em.close();
     }
     
 }
