@@ -36,8 +36,10 @@ public class PhoneDAO {
         EntityManager em = emf.createEntityManager();
 
         TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
+        query.setHint("javax.persistence.cache.storeMode", "REFRESH");
         List<Phone> resultList = query.getResultList();
         resultList.forEach(p -> System.out.println(p));
+        em.close();
     }
     
     public void removeAPhone(String number) {
@@ -71,7 +73,9 @@ public class PhoneDAO {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p WHERE p.number=:number", Phone.class);
         query.setParameter("number", number);
-        return query.getSingleResult();
+        Phone p = query.getSingleResult();
+        em.close();
+        return p;
     }
 
     void updatePhone(String oldNumber, String newNumber) {
